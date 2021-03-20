@@ -1,0 +1,15 @@
+spring:
+  aplication:
+    name: ryckandmorty
+
+springdoc:
+  swagger-ui:
+    enabled: true
+
+server:
+  port: 8081
+  error:
+    include-message: always
+    include-binding-errors: always
+  servlet:
+    context-path: /${spring.aplication.name}
