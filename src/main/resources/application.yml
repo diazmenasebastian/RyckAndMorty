@@ -13,3 +13,6 @@ server:
     include-binding-errors: always
   servlet:
     context-path: /${spring.aplication.name}
+
+app:
+  characterUrl: https://rickandmortyapi.com/api/character/%d

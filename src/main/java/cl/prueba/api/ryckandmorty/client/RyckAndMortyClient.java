@@ -5,6 +5,7 @@ import cl.prueba.api.ryckandmorty.dto.Location;
 import cl.prueba.api.ryckandmorty.error.ResourceNotFoundException;
 import cl.prueba.api.ryckandmorty.error.ServiceException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -20,14 +21,16 @@ import org.springframework.web.client.RestTemplate;
 public class RyckAndMortyClient {
 
     private final RestTemplate restTemplate;
+    private final Environment environment;
 
-    public RyckAndMortyClient(RestTemplate restTemplate) {
+    public RyckAndMortyClient(RestTemplate restTemplate, Environment environment) {
         this.restTemplate = restTemplate;
+        this.environment = environment;
     }
 
     public Character getCharacterById(Integer id){
         log.info("Se solicita personaje por id [{}]", id);
-        String url = String.format("https://rickandmortyapi.com/api/character/%d", id);
+        String url = String.format(environment.getProperty("app.characterUrl"), id);
         try {
             return restTemplate.getForObject(url, Character.class);
         } catch (HttpClientErrorException.NotFound x){
